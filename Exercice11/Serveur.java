@@ -1,12 +1,15 @@
-
+import java.util.concurrent.locks.*;
+import java.util.*;
+//import java.util.concurrent.Condition;
 
 public class Serveur implements Runnable{
 
 	
-	private Lock lock= new ReentrantLock();
+	private ReponseRequete r;
+	private final Lock lock= new ReentrantLock();
 	
-	private Condition nouvelleRequete = new Condition();
-	private Condition clientAttente = new Condition();
+	private final Condition nouvelleRequete = lock.newCondition();
+	private final Condition clientAttente = lock.newCondition();
 
 	private boolean oisif;
 
@@ -16,21 +19,24 @@ public class Serveur implements Runnable{
 
 	}
 
-	public void soumettre(int id, int i, int type){
+	public void soumettre(int id, int i) throws InterruptedException{
 		lock.lock();
 		try{
 			while(!oisif){
 				clientAttente.await();
 			}
+				r = new ReponseRequete(id, i);
+			
 				nouvelleRequete.signal();
 			
 		}finally{
 			lock.unlock();
-		}
-	}
+		
+        }
+    }
 
 
-	public void attendreRequete()throws InterruptedException{
+	public void attendreRequete() throws InterruptedException{
 		
 		lock.lock();
 		try{
@@ -50,11 +56,8 @@ public class Serveur implements Runnable{
 		lock.lock();
 		
 		try{
-			if(id % 3 != 0){
-				;
-			}else{
-				type = 2;
-			}
+		
+			
 			oisif = true;
 			clientAttente.signalAll();
 		}finally{
@@ -64,18 +67,19 @@ public class Serveur implements Runnable{
 	}
 	
 
-
+                              
 	public void run(){
 		try{
+		
 			while(true){ //a changer pour terminaison du run serveur propre
 				attendreRequete();
 				traiterRequete();
 			}
-			catch(InterruptedException e){
+			}catch(InterruptedException e){
 				System.out.println("Serveur interrompu!");
 			}
 
-		}
+		
 
 	}
 

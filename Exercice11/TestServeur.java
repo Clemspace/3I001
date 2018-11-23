@@ -1,26 +1,38 @@
+//import java.util.*;
+//import java.util.concurrent.Condition;
 
 public class TestServeur{
 
 	public static void main(String[] args){
 
-		public final int NB_CLIENTS = 6;
-		public final int NB_REQUETES = 5;
+		final int NB_CLIENTS = 6;
+		final int NB_REQUETES = 5;
 
-		
-		public Thread[] clients = new Thread[NB_CLIENTS];
-		public Thread serveur = new Thread(new Serveur(clients));
+		Serveur serveur = new Serveur();
+		Thread clients[] = new Thread[NB_CLIENTS];
+        //Serveur serv = (Serveur)serveur;
 
-		for(int i = 0;i<NB_CLIENTS;i++){
-			clients[i]  = new Thread(new Client(NB_REQUETES));
-			i.start();
-
-		}
-
-		for(int i = 0;i<NB_CLIENTS;i++){
-			i.join();
+		for(int i = 0;i < NB_CLIENTS ; i++){
+			clients[i]  = new Thread(new Client(NB_REQUETES, serveur));
+			
 
 		}
-		serveur.interrupt();
+		Thread serv = new Thread(serveur);
+		serv.start();
+		for(int i = 0;i < NB_CLIENTS ; i++){
+			
+			clients[i].start();
+
+		}
+        try{
+            for(int i = 0;i < NB_CLIENTS ; i++){
+                clients[i].join();
+
+            }
+        }catch(InterruptedException e){
+                System.out.println("Oopsie ! "+e);
+        }
+		serv.interrupt();
 
 	}
 }

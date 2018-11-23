@@ -2,21 +2,27 @@
 
 public class ReponseRequete{
 	
+
 	private int id;
 	//private String message;
 	private int valeur;
 	private int type;
 
 
-	public ReponseRequete(int id, int type){
-		id = ++cpt;
+	public ReponseRequete(int id, int val){
+		id = id;
 		valeur = val;
-		client = c;
+
+		if(id % 3 != 0){
+			type = 1;
+		}else{
+			type = 2;
+		}
 		
 	}
 
 	public String toString(){
-		return "requete: (" + client +", "+ valeur+", "+type+")"; 
+		return "requete: (" + id +", "+ valeur+", "+type+")"; 
 	}
 
 

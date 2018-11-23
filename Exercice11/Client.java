@@ -22,9 +22,14 @@ public class Client implements Runnable{
 	}
 
 	public void requeteServie(ReponseRequete r){
-		
-		System.out.println(r.toString());
-		attendReponse.signal();
+		lock.lock();
+		try{
+            System.out.println(r.toString());
+            attendReponse.signal();
+        }finally{
+            lock.unlock();
+        
+        }
 		
 	}
 

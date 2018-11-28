@@ -25,7 +25,7 @@ public class Client implements Runnable{
 		lock.lock();
 		try{
             System.out.println(r.toString());
-            attendReponse.signal();
+            attendReponse.signalAll();
         }finally{
             lock.unlock();
         

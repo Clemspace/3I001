@@ -5,8 +5,8 @@ public class TestServeur{
 
 	public static void main(String[] args){
 
-		final int NB_CLIENTS = 6;
-		final int NB_REQUETES = 5;
+		final int NB_CLIENTS = 3;
+		final int NB_REQUETES = 2;
 
 		Serveur serveur = new Serveur();
 		Thread clients[] = new Thread[NB_CLIENTS];
@@ -19,6 +19,7 @@ public class TestServeur{
 		}
 		Thread serv = new Thread(serveur);
 		serv.start();
+		
 		for(int i = 0;i < NB_CLIENTS ; i++){
 			
 			clients[i].start();
@@ -29,10 +30,13 @@ public class TestServeur{
                 clients[i].join();
 
             }
+            
+    		serv.interrupt();
+    		System.out.println("Fin du service! :)");
         }catch(InterruptedException e){
                 System.out.println("Oopsie ! "+e);
         }
-		serv.interrupt();
+        
 
 	}
 }

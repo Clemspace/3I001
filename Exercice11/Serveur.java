@@ -24,10 +24,12 @@ public class Serveur implements Runnable{
 		try{
 			while(!oisif){
 				clientAttente.await();
+				System.out.println("Le Client "+id+ " attend ");
 			}
+				oisif = false;
 				r = new ReponseRequete(id, i);
 			
-				nouvelleRequete.signal();
+				nouvelleRequete.signalAll();
 			
 		}finally{
 			lock.unlock();
@@ -41,9 +43,13 @@ public class Serveur implements Runnable{
 		lock.lock();
 		try{
 			while(oisif){
+				System.out.println("Le Serveur attend ");
 				nouvelleRequete.await();
 			}
+			System.out.println("Le Serveur travaille ");
+
 			oisif = false;
+			
 
 		}finally{
 			lock.unlock();
@@ -56,10 +62,9 @@ public class Serveur implements Runnable{
 		lock.lock();
 		
 		try{
-		
-			
 			oisif = true;
 			clientAttente.signalAll();
+		
 		}finally{
 			lock.unlock();
 		}

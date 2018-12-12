@@ -1,4 +1,4 @@
-//import java.util.Concurrent.*;
+import java.util.Concurrent.*;
 
 public class Corde {
     // gérer la section critique, soit locks, soit semaphores

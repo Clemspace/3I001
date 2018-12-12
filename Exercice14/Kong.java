@@ -6,7 +6,7 @@ public class Kong implements Runnable {
     public final int id;
     private Corde laCorde;
 
-  private Position;
+    private Position pos;
 
   public Babouin(Corde c){
     id = cpt++;
@@ -21,11 +21,11 @@ public class Kong implements Runnable {
 
     public void run() {
 	try {
-	    laCorde.accederKong(position);
+	    laCorde.accederKong(pos);
 	    System.out.println(this.toString() + " a pris la corde");
 	    traverser();
 	    System.out.println(this.toString() + " est arrivé");
-	    laCorde.lacherKong(position);
+	    laCorde.lacherKong(pos);
 	} catch (InterruptedException e) {
 	    System.out.println("Pb babouin!");
 	}

@@ -3,7 +3,7 @@ public static void main(Str[] args){
 
   final int NB_BABOUINS = 15;
   final int NB_KONGS = 1;
-  Corde c = new Corde();
+  Corde c = new Corde(5);
 
   //TODO gérer accès aux threads pour le join des classes
 

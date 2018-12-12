@@ -11,5 +11,8 @@ public enum Position {
     public int index() {
 	return index;
     }
+    public static Position getRandom() {
+        return values()[(int) (Math.random() * values().length)];
+    }
 
 }

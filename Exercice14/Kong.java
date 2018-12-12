@@ -1,34 +1,40 @@
-import java.util.Concurrent.*;
+import java.util.concurrent.*;
 
 public class Kong implements Runnable {
 
-    private static int cpt = 0;
-    public final int id;
-    private Corde laCorde;
+	private static int cpt = 0;
+	public final int id;
+	private Corde laCorde;
 
-    private Position pos;
+	private Position pos;
 
-  public Babouin(Corde c){
-    id = cpt++;
+	public Kong(Corde c) {
+		id = cpt++;
+		pos = Position.getRandom();
+		laCorde = c;
 
-  }
 
-    public void traverser() {
-
-    }
-
- 
-
-    public void run() {
-	try {
-	    laCorde.accederKong(pos);
-	    System.out.println(this.toString() + " a pris la corde");
-	    traverser();
-	    System.out.println(this.toString() + " est arrivé");
-	    laCorde.lacherKong(pos);
-	} catch (InterruptedException e) {
-	    System.out.println("Pb babouin!");
 	}
-    }
+
+	@Override
+	public String toString() {
+		return "Kong [id=" + id + ", pos=" + pos + "]";
+	}
+
+	public void traverser() {
+
+	}
+
+	public void run() {
+		try {
+			laCorde.accederKong(pos);
+			System.out.println(this.toString() + " a pris la corde");
+			traverser();
+			System.out.println(this.toString() + " est arrivé");
+			laCorde.lacherKong(pos);
+		} catch (InterruptedException e) {
+			System.out.println("Pb babouin!");
+		}
+	}
 
 }
